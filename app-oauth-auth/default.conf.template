@@ -1,0 +1,39 @@
+resolver 127.0.0.11 valid=15s; # docker resolver
+
+proxy_set_header    Host               $host;
+proxy_set_header    X-Real-IP          $remote_addr;
+proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;
+proxy_set_header    X-Forwarded-Host   $host;
+proxy_set_header    X-Forwarded-Server $host;
+proxy_set_header    X-Forwarded-Port   $server_port;
+proxy_set_header    X-Forwarded-Proto  $scheme;
+
+server {
+    listen       80;
+    server_name  auth.localhost;
+
+    location / {
+        set $auth_provider oidc-provider:9000;
+        proxy_pass http://$auth_provider;
+    }
+}
+
+server {
+    listen       80;
+    server_name  app1.localhost;
+
+    location / {
+        set $upstream_app1 oidc-client-1:3000;
+        proxy_pass http://$upstream_app1;
+    }
+}
+
+server {
+    listen       80;
+    server_name  app2.localhost;
+
+    location / {
+        set $upstream_app2 oidc-client-2:3000;
+        proxy_pass http://$upstream_app2;
+    }
+}

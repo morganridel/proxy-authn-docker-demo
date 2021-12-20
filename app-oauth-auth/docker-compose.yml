@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  proxy:
+    image: nginx:1.21.4
+    volumes:
+    - ./default.conf.template:/etc/nginx/templates/default.conf.template
+    ports:
+    - "80:80"
+
+  oidc-provider:
+    image: qlik/simple-oidc-provider:0.2.5
+    environment:
+      - CONFIG_FILE=/etc/config.json
+      - USERS_FILE=/etc/users.json
+    volumes:
+      - ./oidc-config:/etc/config.json:ro
+      - ./users.json:/etc/users.json:ro
+
+  
+  oidc-client-1:
+    image: morganridel/mock-oidc-client:0.0.1
+    environment:
+      - ISSUER_BASE_URL=http://auth.localhost
+      - BASE_URL=http://app1.localhost/api
+      - CLIENT_ID=foo
+      - CLIENT_SECRET=bar
+      - SECRET=random-string-a5t8df86s
+    extra_hosts:
+      - "auth.localhost:172.17.0.1" # docker host ip
+      # - "auth.localhost:192.168.1.x" # This should also work with host lan IP
+
+  oidc-client-2:
+    image: morganridel/mock-oidc-client:0.0.1
+    environment:
+      - ISSUER_BASE_URL=http://auth.localhost
+      - BASE_URL=http://app2.localhost/api
+      - CLIENT_ID=oof
+      - CLIENT_SECRET=rab
+      - SECRET=random-string-bg8uf3q4a
+    extra_hosts:
+      - "auth.localhost:172.17.0.1" # docker host ip

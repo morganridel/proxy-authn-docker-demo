@@ -1,0 +1,21 @@
+resolver 127.0.0.11 valid=15s; # docker resolver
+
+server {
+    listen       80;
+    server_name  app1.localhost;
+
+    location / {
+        set $upstream_app1 app1:8080;
+        proxy_pass http://$upstream_app1;
+    }
+}
+
+server {
+    listen       80;
+    server_name  app2.localhost;
+
+    location / {
+        set $upstream_app2 app2:8080;
+        proxy_pass http://$upstream_app2;
+    }
+}

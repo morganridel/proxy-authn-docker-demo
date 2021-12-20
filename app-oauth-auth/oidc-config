@@ -1,0 +1,25 @@
+{
+  "idp_name": "http://auth.localhost/",
+  "port": 9000,
+  "client_config": [
+    {
+      "client_id": "foo",
+      "client_secret": "bar",
+      "redirect_uris": [
+        "http://app1.localhost/api/callback"
+        ]
+    },
+    {
+      "client_id": "oof",
+      "client_secret": "rab",
+      "redirect_uris": [
+        "http://app2.localhost/api/callback"
+        ]
+    }
+  ],
+  "claim_mapping": {
+    "openid": [ "sub" ],
+    "email": [ "email", "email_verified" ],
+    "profile": [ "name", "nickname" ]
+  }
+}

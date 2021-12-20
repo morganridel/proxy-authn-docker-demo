@@ -1,0 +1,11 @@
+[
+  {
+    "id": "SIMPLE_OIDC_USER",
+    "email": "user@localhost.com",
+    "email_verified": true,
+    "name": "User Mock",
+    "nickname": "user",
+    "password": "password",
+    "groups": ["users"]
+  }
+]

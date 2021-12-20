@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  proxy:
+    image: nginx:1.21.4
+    volumes:
+    - ./default.conf.template:/etc/nginx/templates/default.conf.template
+    ports:
+    - "80:80"
+
+  app1:
+    image: vabene1111/recipes:1.0.3
+    environment:
+      - GUNICORN_MEDIA=1
+
+  app2:
+    image: hubae/jwt-spring-security-demo:2.0.0

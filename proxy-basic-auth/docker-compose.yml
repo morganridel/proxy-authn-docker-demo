@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  proxy:
+    image: nginx:1.21.4
+    volumes:
+    - ./default.conf.template:/etc/nginx/templates/default.conf.template
+    - ./.htpasswd:/etc/nginx/.htpasswd
+    ports:
+    - "80:80"
+
+  app1:
+    image: netdata/netdata:v1.32.1
+    ports:
+      - 19999:19999
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+
+  app2:
+    image: dahuss/a-dark-room:2017.08.04

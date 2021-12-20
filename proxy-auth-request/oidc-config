@@ -1,0 +1,25 @@
+{
+  "idp_name": "http://auth.apps.localhost/",
+  "port": 9000,
+  "client_config": [
+    {
+      "client_id": "oauth2-proxy",
+      "client_secret": "secret",
+      "redirect_uris": [
+        "http://oauth2.apps.localhost/oauth2/callback"
+        ]
+    },
+    {
+      "client_id": "oof",
+      "client_secret": "rab",
+      "redirect_uris": [
+        "http://app2.apps.localhost/api/callback"
+        ]
+    }
+  ],
+  "claim_mapping": {
+    "openid": [ "sub" ],
+    "email": [ "email", "email_verified" ],
+    "profile": [ "name", "nickname" ]
+  }
+}
