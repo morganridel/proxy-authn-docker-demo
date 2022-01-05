@@ -2,7 +2,7 @@
 
 This repository contains code examples of different means of authentication when multiples apps are behind a reverse-proxy.
 
-It is meant to illustrate my [blog post on authentication behind a proxy]() and assumes no control over the source code of the upstream apps.
+It is meant to illustrate my [blog post on authentication behind a proxy](http://morganridel.fr/authentication-for-multiple-apps-behind-a-reverse-proxy) and assumes no control over the source code of the upstream apps.
 
 ![](proxy.png)
 
